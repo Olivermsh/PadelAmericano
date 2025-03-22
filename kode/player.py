@@ -16,15 +16,14 @@ class Player():
 
 
 
-#Spillerne skrives op og sættes i en liste
-player1 = Player("Oliver Hansen")
-player2 = Player("A2")
-player3 = Player("B3")
-player4 = Player("C4")
-player5 = Player("D5")
-player6 = Player("E6")
-player7 = Player("F7")
-player8 = Player("G8")
+# #Spillerne skrives op og sættes i en liste
+# player1 = Player("Oliver Hansen")
+# player2 = Player("A2")
+# player3 = Player("B3")
+# player4 = Player("C4")
+# player5 = Player("D5")
+# player6 = Player("E6")
+# player7 = Player("F7")
+# player8 = Player("G8")
 
-lst = [player1, player2, player3, player4, player5, player6, player7, player8]
-
+# lst = [player1, player2, player3, player4, player5, player6, player7, player8]

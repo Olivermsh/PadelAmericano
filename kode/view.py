@@ -1,14 +1,41 @@
+from player import Player
+from tournament import Tournament
 import tkinter as tk
 from PIL import Image, ImageTk
 
+image_path = "Baggrund.png" 
 
-image_path = "Baggrund.png"
+# Gør players til en global variabel
+players = []
+
+tournament = None
 
 # Opret hovedvinduet
 root = tk.Tk()
 root.title("Padel Americano")
 root.geometry("958x560")
 
+
+def create_players():
+    global players, tournament  # Gør variablerne tilgængelig uden for funktionen
+    players.clear()  # Rens listen, så vi ikke får dubletter ved flere klik
+    for i, entry in enumerate(entries):
+        name = entry.get().strip()
+        if not name:
+            name = f"Ukendt spiller {i+1}"
+        players.append(Player(name))  # Opret Player-objekt
+    
+    tournament = Tournament(players) #Opretter en turnering med de givende navne
+
+    skift_scene()
+
+def next_round():
+    tournament.nextRound()
+    if tournament.current_round < 8:
+        skift_scene()
+    else:
+        ranking_scene()
+    
 # Funktion til at skifte til billedscenen
 def skift_scene():
     global img, photo  # Sørg for, at billedet ikke bliver slettet af garbage collection
@@ -26,12 +53,15 @@ def skift_scene():
     canvas.pack()
     canvas.create_image(0, 0, anchor="nw", image=photo)
 
+    spillere_i_runden = [spiller for kamp in tournament.rounds[1] for spiller in kamp]
+    names = tournament.getPlayers()
+
     # Spillernes placeringer (x, y koordinater)
     spiller_pos = [
-        (55, 45, "Spiller 1"), (237, 45, "Spiller 2"),  # Øvre venstre bane
-        (55, 530, "Spiller 3"), (237, 530, "Spiller 4"),  # Nedre venstre bane
-        (653, 45, "Spiller 5"), (836, 45, "Spiller 6"),  # Øvre højre bane
-        (653, 530, "Spiller 7"), (836, 530, "Spiller 8")   # Nedre højre bane
+        (55, 45, f"{names[0]}"), (237, 45, f"{names[1]}"),  # Øvre venstre bane
+        (55, 530, f"{names[2]}"), (237, 530, f"{names[3]}"),  # Nedre venstre bane
+        (653, 45, f"{names[4]}"), (836, 45, f"{names[5]}"),  # Øvre højre bane
+        (653, 530, f"{names[6]}"), (836, 530, f"{names[7]}")   # Nedre højre bane
     ]
 
     # Tegn spillernavne med baggrundsbokse
@@ -57,9 +87,14 @@ def skift_scene():
         entry.pack(pady=5)
 
     # Tilføj knap til at skifte til næste scene
-    next_button = tk.Button(root, text="Næste kampe", font=("Arial", 16), width=15, height=2, command=skift_scene)
+    next_button = tk.Button(root, text="Næste kampe", font=("Arial", 16), width=15, height=2, command=next_round)
     next_button.place(relx=0.5, rely=0.5, anchor="center")  # Placer knappen i midten af skærmen
 
+def ranking_scene():
+        # Fjern alle widgets i vinduet
+    for widget in root.winfo_children():
+        widget.destroy()
+    
 # Opret en frame til layout
 frame = tk.Frame(root)
 frame.pack(expand=True, fill="both", padx=20, pady=20)
@@ -71,7 +106,7 @@ left_frame.pack(side="left", expand=True, fill="both")
 label_title = tk.Label(left_frame, text="Padel Americano\n8 spillere", font=("Arial", 24, "bold"), anchor="w", justify="center")
 label_title.pack(pady=20)
 
-button = tk.Button(left_frame, text="Sæt i gang...", command=skift_scene, font=("Arial", 16), width=15, height=2)
+button = tk.Button(left_frame, text="Sæt i gang...", command=create_players, font=("Arial", 16), width=15, height=2)
 button.pack()
 
 # Højre side - Spiller input
