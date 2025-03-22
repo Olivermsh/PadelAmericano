@@ -15,8 +15,8 @@ class Tournament:
             7: [(2, 5, 3, 4), (0, 7, 1, 6)]
         }
 
-    def getResult(self, p1, p2, p3, p4):
-        while True:
+    def getResult(self, p1, p2, p3, p4): #Får resultatet fra brugeren
+        while True: #Mens den er true spørger den efter resultaterne
             try:
                 team1 = int(input(f"Resultat for {p1} og {p2}: "))
                 team2 = int(input(f"Resultat for {p3} og {p4}: "))
@@ -26,28 +26,29 @@ class Tournament:
                 elif team1 + team2 <32:
                     print(f"Fejl! Summen af de to resultater er {team1 + team2}, der spilles 32 bolde, i er ikke færdig endnu.")
                 else:
-                    return team1, team2
+                    return team1, team2 #Retunerer resultaterne
 
-            except ValueError:
+            except ValueError: #Har en fejlmelding hvis brugeren indtaster noget forkert
                 print("Ugyldigt input! Indtast venligst et heltal.")  
 
-    def play_rounds(self):
+    def play_rounds(self): #Håndtere runderne
         for round_number, matches in self.rounds.items(): #Opdeller hver item i runder og kampe
             print(f"Runde {round_number}")
 
             for match_teams in matches: #Opsætter kampen for hver kamp under kampe i det nuværende item
-                p1, p2, p3, p4 = [self.players[idx] for idx in match_teams]
+                p1, p2, p3, p4 = [self.players[idx] for idx in match_teams] 
                 print(f"På banen spiller {p1} og {p2} mod {p3} og {p4}")
 
-                game = match(p1, p2, p3, p4)
-                score1, score2 = self.getResult(p1, p2, p3, p4)
-                game.result(score1, score2)
+                game = match(p1, p2, p3, p4) #Opretter en kamp med de rigtige personer
+                score1, score2 = self.getResult(p1, p2, p3, p4) #Får resultatet for kampene
+                game.result(score1, score2) #Registrer resultaterne
 
             print("----------------------------------------------\n")
 
     def ranking(self):
-        ranked_players = sorted(self.players, key=lambda player: player.point, reverse=True)
+        ranked_players = sorted(self.players, key=lambda player: player.point, reverse=True) #Opretter ranglisten
 
+        #Printer ranglisten ud
         print("\nRangliste:")
         for i, player in enumerate(ranked_players, start=1):
             print(f"{i}. {player.name} med {player.point} point")

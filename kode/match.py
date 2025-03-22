@@ -6,12 +6,13 @@ class match():
         self.p3 = p3
         self.p4 = p4
 
-    def result(self,score1: int, score2: int):
+    def result(self,score1: int, score2: int): #Tilføjer point til den enkelte spiller
         self.p1.addPoint(score1)
         self.p2.addPoint(score1)
         self.p3.addPoint(score2)
         self.p4.addPoint(score2)
 
+        #Registrer om man vandt eller tabte
         if score1 > score2:
             self.p1.wonMatch()
             self.p2.wonMatch()

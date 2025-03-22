@@ -5,10 +5,10 @@ class Player():
         self.point = 0
         self.won = 0
     
-    def addPoint(self, newPoint: int):
+    def addPoint(self, newPoint: int): #Opdatere antal point
         self.point += newPoint
     
-    def wonMatch(self):
+    def wonMatch(self): #Opdatere vundene kampe
         self.won += 1
     
     def __str__(self):

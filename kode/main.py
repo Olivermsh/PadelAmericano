@@ -3,7 +3,7 @@ from tournament import *
 
 def main():
 #Der testes    
-    tournament1 =Tournament(lst)
+    tournament1 = Tournament(lst)
     tournament1.play_rounds()
     tournament1.ranking()
 

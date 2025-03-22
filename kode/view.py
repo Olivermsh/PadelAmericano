@@ -1,8 +1,8 @@
 import tkinter as tk
-from PIL import Image, ImageTk  # Husk at installere Pillow med "pip install pillow"
+from PIL import Image, ImageTk
 
-# Sti til billedet (opdater denne sti med din egen)
-billede_sti = "Baggrund.png"  # Erstat med din egen sti
+
+image_path = "Baggrund.png"
 
 # Opret hovedvinduet
 root = tk.Tk()
@@ -18,7 +18,7 @@ def skift_scene():
         widget.destroy()
 
     # Indlæs og vis baggrundsbilledet
-    img = Image.open(billede_sti)
+    img = Image.open(image_path)
     img = img.resize((958, 560), Image.Resampling.LANCZOS)  # Tilpas størrelse
     photo = ImageTk.PhotoImage(img)
 
