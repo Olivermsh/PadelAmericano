@@ -4,26 +4,19 @@ class Player():
         self.name = name
         self.point = 0
         self.won = 0
+        self.tie = 0
+        self.lost = 8
     
     def addPoint(self, newPoint: int): #Opdatere antal point
         self.point += newPoint
     
     def wonMatch(self): #Opdatere vundene kampe
         self.won += 1
+        self.lost -= 1
     
-    def __str__(self):
+    def tieMatch(self): #Opdatere uafgjordte kampe
+        self.tie += 1
+        self.lost -= 1
+    
+    def __str__(self): #Retuneren navnet på spilleren
         return self.name
-
-
-
-# #Spillerne skrives op og sættes i en liste
-# player1 = Player("Oliver Hansen")
-# player2 = Player("A2")
-# player3 = Player("B3")
-# player4 = Player("C4")
-# player5 = Player("D5")
-# player6 = Player("E6")
-# player7 = Player("F7")
-# player8 = Player("G8")
-
-# lst = [player1, player2, player3, player4, player5, player6, player7, player8]

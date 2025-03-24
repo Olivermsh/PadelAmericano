@@ -12,11 +12,16 @@ class match():
         self.p3.addPoint(score2)
         self.p4.addPoint(score2)
 
-        #Registrer om man vandt eller tabte
+        #Registrer om man vandt, tabte eller spillede uafgjordt
         if score1 > score2:
             self.p1.wonMatch()
             self.p2.wonMatch()
-        else:
+        elif score1 < score2:
             self.p3.wonMatch()
             self.p4.wonMatch()
+        else:
+            self.p1.tieMatch()
+            self.p2.tieMatch()
+            self.p3.tieMatch()
+            self.p4.tieMatch()
             

@@ -1,10 +1,11 @@
 from match import *
 
+#Oprette klassen
 class Tournament:
     def __init__(self, names):
         self.players = names
         self.current_round = 1
-        self.spillere_i_runden = []
+        self.players_in_round = []
 
         # Definer runderne som en dictionary
         self.rounds = {
@@ -17,48 +18,11 @@ class Tournament:
             7: [(2, 5, 3, 4), (0, 7, 1, 6)]
         }
     def getPlayers(self): #Henter indeks fra dictionary og laver en liste med navnene i korrekt rækkefølge
-            self.spillere_i_runden = [spiller for kamp in self.rounds[self.current_round] for spiller in kamp]
-            lst = []
-            for _ in self.spillere_i_runden:
+            self.players_in_round = [player for match in self.rounds[self.current_round] for player in match]
+            lst = [] #Tom liste til navnene
+            for _ in self.players_in_round:
                 lst.append(self.players[_])
-            return lst
+            return lst #Retunere listen
     
-    def nextRound(self):
+    def nextRound(self): #Holder styr på nuværende runde nummer
         self.current_round += 1
-
-    def getResult(self, p1, p2, p3, p4):
-        while True:
-            try:
-                team1 = int(input(f"Resultat for {p1} og {p2}: "))
-                team2 = int(input(f"Resultat for {p3} og {p4}: "))
-
-                if team1 + team2 > 32:
-                    print(f"Fejl! Summen af de to resultater er {team1 + team2}, der spilles kun 32 bolde.")
-                elif team1 + team2 <32:
-                    print(f"Fejl! Summen af de to resultater er {team1 + team2}, der spilles 32 bolde, i er ikke færdig endnu.")
-                else:
-                    return team1, team2
-
-            except ValueError:
-                print("Ugyldigt input! Indtast venligst et heltal.")  
-
-    def play_rounds(self):
-        for round_number, matches in self.rounds.items(): #Opdeller hver item i runder og kampe
-            print(f"Runde {round_number}")
-
-            for match_teams in matches: #Opsætter kampen for hver kamp under kampe i det nuværende item
-                p1, p2, p3, p4 = [self.players[idx] for idx in match_teams]
-                print(f"På banen spiller {p1} og {p2} mod {p3} og {p4}")
-
-                game = match(p1, p2, p3, p4)
-                score1, score2 = self.getResult(p1, p2, p3, p4)
-                game.result(score1, score2)
-
-            print("----------------------------------------------\n")
-
-    def ranking(self):
-        ranked_players = sorted(self.players, key=lambda player: player.point, reverse=True)
-
-        print("\nRangliste:")
-        for i, player in enumerate(ranked_players, start=1):
-            print(f"{i}. {player.name} med {player.point} point")
