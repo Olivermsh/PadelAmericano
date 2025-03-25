@@ -3,6 +3,7 @@ from tournament import Tournament
 from match import match
 import tkinter as tk
 from PIL import Image, ImageTk
+from tkinter import messagebox
 
 #Globale variabler
 image_path = "Baggrund.png" 
@@ -128,12 +129,33 @@ def changeScene():
     
 
     # Tilføj knap til at skifte til næste scene
-    next_button = tk.Button(root, text="Næste kampe", font=("Arial", 16), width=15, height=2, command=nextRound)
+    next_button = tk.Button(root, text="Næste kampe", font=("Arial", 16), width=15, height=2, command=checkScore)
     next_button.place(relx=0.5, rely=0.5, anchor="center")  #Placer knappen i midten af skærmen
     
     #Tilføj tekst "Runde: ... ud af 7" centralt under knappen
     round_text = tk.Label(root, text=f"Runde:\n{tournament.current_round} ud af 7", font=("Arial", 16, "bold"), bg="white")
     round_text.place(relx=0.5, rely=0.65, anchor="center")  #Placer teksten under knappen, centralt
+
+#Tjekker om de rigtig antal bolde er indtastet
+def checkScore():
+    global results #Globalisere resultaterne 
+
+    if int(results[0].get().strip()) + int(results[1].get().strip()) !=32:
+        print(f"Runde {tournament.current_round}: Der er en fejl med resultaterne på bane 1")
+        #Tilføj tekst på skærmen
+        round_text = tk.Label(root, text="Der er fejl i et \n af resultaterne", font=("Arial", 16, "bold"), bg="white")
+        round_text.place(relx=0.5, rely=0.8, anchor="center")  #Placer teksten under knappen, centralt
+
+    elif int(results[2].get().strip()) + int(results[3].get().strip()) !=32:
+        print(f"Runde {tournament.current_round}: Der er en fejl med resultaterne på bane 2")
+        #Tilføj tekst på skærmen
+        round_text = tk.Label(root, text="Der er fejl i et \n af resultaterne", font=("Arial", 16, "bold"), bg="white")
+        round_text.place(relx=0.5, rely=0.8, anchor="center")  #Placer teksten under knappen, centralt
+    
+    if int(results[0].get().strip()) + int(results[1].get().strip()) == 32 and int(results[2].get().strip()) + int(results[3].get().strip()) == 32:
+        print("")
+        nextRound()
+
 
 #Funktion til næste runde
 def nextRound():
@@ -188,12 +210,13 @@ def rankingScene():
     quit_button = tk.Button(button_frame, text="Afslut", font=("Arial", 16), width=12, height=2, command=root.quit)
     quit_button.pack(side="left", padx=10)
 
-    new_tournament_button = tk.Button(button_frame, text="Ny Americano", font=("Arial", 16), width=12, height=2, command=restartProgram)
+    new_tournament_button = tk.Button(button_frame, text="Ny Americano", font=("Arial", 16), width=12, height=2, command=confirmRestart)
     new_tournament_button.pack(side="left", padx=10)
 
     statistik_button = tk.Button(button_frame, text="Statistik", font=("Arial", 16), width=12, height=2, command=statisticsScene)
     statistik_button.pack(side="left", padx=10)
 
+#Funktion til at vise statistik
 def statisticsScene():
     #Fjerner alle widgets i vinduet
     for widget in root.winfo_children():
@@ -224,13 +247,18 @@ def statisticsScene():
     back_button = tk.Button(root, text="Tilbage", font=("Arial", 16), width=12, height=2, command=rankingScene)
     back_button.place(relx=0.5, rely=0.8, anchor="center")
 
+def confirmRestart():
+    result = messagebox.askyesno("Bekræft ny Americano", "Er du sikker på, at du vil starte en nyt Americano?")
+    if result:
+        restartProgram()  # Call restart function if user confirms
+
 #Funktion til at genstarte programmet
 def restartProgram():
-    global players, tournament, resualts, match1, match2
+    global players, tournament, results, match1, match2
     
     players = []
     tournament = None
-    resualts = []
+    results = []
     match1 = None
     match2 = None
 
