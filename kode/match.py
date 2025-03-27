@@ -1,5 +1,5 @@
 #Klasse til kampene i forhold til resultat og hvem der vandt
-class match():
+class Match():
     def __init__(self,p1,p2,p3,p4):
         self.p1 = p1
         self.p2 = p2

@@ -1,9 +1,10 @@
 from player import Player
 from tournament import Tournament
-from match import match
+from match import Match
 import tkinter as tk
 from PIL import Image, ImageTk
 from tkinter import messagebox
+import random
 
 #Globale variabler
 image_path = "Baggrund.png" 
@@ -69,6 +70,8 @@ def createPlayers():
             name = f"Ukendt spiller {i+1}"
         players.append(Player(name))  # Opret Player-objekt
     
+    random.shuffle(players) #Sortere listen med spillerne i en tilfældig rækkefølge
+    
     tournament = Tournament(players) #Opretter en turnering med de givende navne
 
     changeScene() #Skifter scene
@@ -91,8 +94,8 @@ def changeScene():
     canvas.create_image(0, 0, anchor="nw", image=photo)
 
     names = tournament.getPlayers()
-    match1 = match(names[0],names[1],names[2],names[3])
-    match2 = match(names[4],names[5],names[6],names[7])
+    match1 = Match(names[0],names[1],names[2],names[3])
+    match2 = Match(names[4],names[5],names[6],names[7])
 
     #Spillernes placeringer (x, y koordinater)
     spiller_pos = [
