@@ -22,6 +22,7 @@ match2 = None
 root = tk.Tk()
 root.title("Padel Americano")
 root.geometry("958x560")
+root.resizable(False, False)
 
 #Funktion til at oprette start skærmen
 def startScreen():
@@ -66,7 +67,7 @@ def createPlayers():
     #Opretter hver spiller med det givende navn
     for i, entry in enumerate(entries):
         name = entry.get().strip()
-        if not name:                      #Hvis feltet er tomt får de ukendt spiller ...
+        if not name:                      #Hvis feltet er tomt får de ukendt spiller X
             name = f"Ukendt spiller {i+1}"
         players.append(Player(name))  # Opret Player-objekt
     

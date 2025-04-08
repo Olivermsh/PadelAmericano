@@ -18,9 +18,12 @@ class Tournament:
             7: [(2, 5, 3, 4), (0, 7, 1, 6)]
         }
     def getPlayers(self): #Henter indeks fra dictionary og laver en liste med navnene i korrekt rækkefølge
-            self.players_in_round = [player for match in self.rounds[self.current_round] for player in match]
+            self.players_in_round = [] #Tom liste til indekserne
+            for match in self.rounds[self.current_round]: #Henter hver tupel
+                for player in match: #Henter hvert indeks i den nuværende tupel
+                    self.players_in_round.append(player) #Tilføjer hvert indeks til listen
             lst = [] #Tom liste til navnene
-            for _ in self.players_in_round:
+            for _ in self.players_in_round: #Omdanner indekserne til navne
                 lst.append(self.players[_])
             return lst #Retunere listen
     
